@@ -36,10 +36,10 @@ HEATMAP_MARGIN_SIZE = 32 # margin around heatmap trackpoints in pixel
 
 PLT_COLORMAP = 'hot' # matplotlib color map
 
-OSM_TILE_SERVER = 'https://maps.wikimedia.org/osm-intl/{}/{}/{}.png' # OSM tile url from https://wiki.openstreetmap.org/wiki/Tile_servers
+OSM_TILE_SERVER = 'https://tile.openstreetmap.org/{}/{}/{}.png' # OSM tile url from https://wiki.openstreetmap.org/wiki/Tile_servers
 OSM_TILE_SIZE = 256 # OSM tile size in pixel
 OSM_MAX_ZOOM = 19 # OSM maximum zoom level
-OSM_MAX_TILE_COUNT = 100 # maximum number of tiles to download
+OSM_MAX_TILE_COUNT = 30 # maximum number of tiles to download
 
 # functions
 def deg2xy(lat_deg: float, lon_deg: float, zoom: int) -> tuple[float, float]:
@@ -89,7 +89,7 @@ def gaussian_filter(image: np.ndarray, sigma: float) -> np.ndarray:
 def download_tile(tile_url: str, tile_file: str) -> bool:
     """Download tile from url to file, wait 0.1s and return True (False) if (not) successful"""
 
-    request = Request(tile_url, headers={'User-Agent':'Mozilla/5.0'})
+    request = Request(tile_url, headers={'User-Agent':'python-requests/2.28.2 for home development'})
 
     try:
         with urlopen(request) as response:
@@ -101,7 +101,7 @@ def download_tile(tile_url: str, tile_file: str) -> bool:
     with open(tile_file, 'wb') as file:
         file.write(data)
 
-    time.sleep(0.1)
+    time.sleep(5)
 
     return True
 
